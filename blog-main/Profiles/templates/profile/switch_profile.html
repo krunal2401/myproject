@@ -1,0 +1,381 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Profile
+{% endblock title %}
+
+{% block style %}
+.form-control:focus {
+    box-shadow: none;
+    border-color: #212529;
+}
+
+
+
+.profile-button:hover {
+    background: #212529;
+    color: white;
+}
+
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #682773;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+}
+
+ /* profile update */
+ * {
+margin: 0;
+padding: 0;
+box-sizing: border-box
+}
+
+body {
+font-family: 'Poppins', sans-serif;
+background-color: aliceblue
+}
+
+.wrapper {
+padding: 30px 50px;
+border: 1px solid #ddd;
+border-radius: 15px;
+margin: 10px auto;
+max-width: 600px
+}
+
+h4 {
+letter-spacing: -1px;
+font-weight: 400
+}
+
+.img {
+width: 70px;
+height: 70px;
+border-radius: 6px;
+object-fit: cover
+}
+
+#img-section p,
+#deactivate p {
+font-size: 12px;
+color: #777;
+margin-bottom: 10px;
+text-align: justify
+}
+
+#img-section b,
+#img-section button,
+#deactivate b {
+font-size: 14px
+}
+
+label {
+margin-bottom: 0;
+font-size: 14px;
+font-weight: 500;
+color: #777;
+padding-left: 3px
+}
+
+.form-control {
+border-radius: 10px
+}
+
+input[placeholder] {
+font-weight: 500
+}
+
+.form-control:focus {
+box-shadow: none;
+border: 1.5px solid #0779e4
+}
+
+select {
+display: block;
+width: 100%;
+border: 1px solid #ddd;
+border-radius: 10px;
+height: 40px;
+padding: 5px 10px
+}
+
+select:focus {
+outline: none
+}
+
+.button {
+background-color: #fff;
+color: #0779e4
+}
+
+.button:hover {
+background-color: #0779e4;
+color: #fff
+}
+
+.btn-primary {
+background-color: #0779e4
+}
+
+.danger {
+background-color: #fff;
+color: #e20404;
+border: 1px solid #ddd
+}
+
+.danger:hover {
+background-color: #e20404;
+color: #fff
+}
+
+@media(max-width:576px) {
+.wrapper {
+padding: 25px 20px
+}
+
+#deactivate {
+line-height: 18px
+}
+}
+
+{% endblock style %}
+
+{% block body %}
+<section>
+    <div class="container rounded bg-white mt-2">
+        <div class="row">
+            <div class="col-md-4 card" style="border-right: 2px solid #212529;"> 
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img
+                        class="rounded-circle mt-5"
+                        src="{{profile.avatar.url}}"
+                        width="170"><span class="font-weight-bold mt-4">  <h1 class="p-3">{{profile.firstname}} {{profile.lastname}}</h1></span></div>
+            </div>
+            <div class="col-md-8 card" style="border-left: 2px solid #212529;">
+                <div class="p-3 py-5">
+                    <h2></h2>
+                    <h5 class="fw-200"></h5><hr>
+                    <h6 class="mt-3">Email : {{profile.email}}</h6><hr>
+                    <h6 class="">username : {{profile.user}}</h6> <hr>
+                     
+                    <div >
+                       <span>Total Blogs : {{profile.all_author_posts_num}}</span>
+                    </div>
+
+
+                    <!-- <button class="btn btn-dark mt-5" data-toggle="modal" data-target="#exampleModal2" >Update Profile</button> -->
+
+                    <!-- <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex flex-row align-items-center back"><i
+                                class="fa fa-long-arrow-left mr-1 mb-1"></i>
+                            <a href="/">
+                                <h6>Back to home</h6>
+                            </a>
+                        </div>
+                        <h6 class="text-right edit_profile">Edit Profile</h6> -->
+                    </div>
+                    <div class="row mt-2">
+                   
+                    </div>
+                    <div class="row mt-3">
+                       
+                       
+                    </div>
+                   
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<div>
+    {% for i in profile.get_all_author_posts reversed %}
+   
+    <section>
+        <div class="card container my-4" style="justify-content: center;margin:auto;">
+            <div class="header p-3 bg text-center font-weight-bold" style="font-size: 1.5rem;">{{i.title}}</div>
+            
+            {% if i.img %}
+            <img src="{{i.img.url}}" alt='error'>
+            {% endif %}
+            
+            <hr>
+            <div class="card-body">
+    
+                <small class="text-muted cat d-flex justify-content-between">
+                    <div class="views">{{i.created}}
+                    </div>
+                    <div class="stats">
+                        <i class="fa fa-eye"></i> 1347
+                        <i class="fa fa-comment"></i> 12
+                    </div>
+                </small>
+                <p class="card-text mt-2">
+                    {{i.body}}
+                </p>
+    
+            </div>
+            <hr>
+            <div class="container">
+                <div class="d-flex justify-content-center row">
+                    <div class="col-md-12">
+                        <div class="d-flex flex-column comment-section" id="myGroup">
+                            <div class="bg-white p-2">
+                                <div class="d-flex flex-row user-info"><img class="rounded-circle" src="{{i.author.avatar.url}}"
+                                        width="40">
+                                    <div class="d-flex flex-column justify-content-start ml-2"><span
+                                            class="d-block font-weight-bold name">{{i.author}}</span><span
+                                            class="date text-black-50">Shared publicly - Jan 2020</span></div>
+                                </div>
+                                
+                                </div>
+                            </div>
+                            <div class="bg-white p-2">
+                                <div class="d-flex flex-row fs-12">
+                                    <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span
+                                            class="ml-1">Like</span></div>
+                                    <div class="like p-2 cursor action-collapse" data-toggle="collapse"
+                                        aria-expanded="true" aria-controls="collapse-1" href="#collapse-1"><i
+                                            class="fa fa-commenting-o"></i><span class="ml-1">Comment</span></div>
+                                    <div class="like p-2 cursor action-collapse" data-toggle="collapse"
+                                        aria-expanded="true" aria-controls="collapse-2" href="#collapse-2"><i
+                                            class="fa fa-share"></i><span class="ml-1">Share</span></div>
+                                </div>
+                            </div>
+                            <div id="collapse-1" class="p-2 collapse" data-parent="#myGroup">
+                                <div class="d-flex flex-row align-items-start"><img class="rounded-circle" src="image/1.jpg"
+                                        width="40"><textarea class="form-control ml-1 shadow-none textarea"></textarea>
+                                </div>
+                                <div class="mt-5 mb-4 text-right"><button class="btn btn-dark btn-sm shadow-none"
+                                        type="button">Post comment</button></div>
+                            </div>
+                            <div id="collapse-2" class=" p-2 collapse" data-parent="#myGroup">
+                                <div class="d-flex flex-row align-items-start"><i
+                                        class="fa fa-facebook border p-3 rounded mr-1"></i><i
+                                        class="fa fa-twitter border p-3 rounded mr-1"></i><i
+                                        class="fa fa-linkedin border p-3 rounded mr-1"></i><i
+                                        class="fa fa-instagram border p-3 rounded mr-1"></i><i
+                                        class="fa fa-dribbble border p-3 rounded mr-1"></i> <i
+                                        class="fa fa-pinterest-p border p-3 rounded mr-1"></i> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    
+    
+    </section>
+    
+
+    {% endfor %}
+    
+   
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="exampleModal2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-transparent">
+            <section>
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                
+                <div class="wrapper bg-white mt-sm-5">
+                    <div class="d-flex align-items-start py-3 border-bottom"> <img src="https://images.pexels.com/photos/1037995/pexels-photo-1037995.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="img" alt="">
+                        <div class="pl-sm-4 pl-2" id="img-section">{{form.avatar}} <b>Profile Photo</b>
+                            <p>Accepted file type .png , .jpg Less than 1MB</p>
+                        </div>
+                    </div>
+                    <div class="py-2">
+                        <div class="row py-2">
+                            <div class="col-md-6"> <label for="firstname" >FirstName : </label> {{form.firstname}} </div>
+                            <div class="col-md-6 pt-md-0 pt-3"> <label for="lastname">LastName : </label> {{form.lastname}}</div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col-md-6"> <label for="email">Email : </label> {{form.email}}</div>
+                            
+                        </div>
+
+                        <div class="row py-2">
+                            <div class="col-md-12"> <label for="country">Country : </label> 
+                                  {{form.country}}  
+                                   </div>
+                                
+                        </div>
+                        <div class="row py-2">
+                            <div class="col-md-12"> <label for="country">Country : </label> 
+                                  {{form.language}}  
+                                   </div>
+                                
+                        </div>
+                        <div class="py-3 pb-4 border-bottom"> <button class="btn btn-dark mr-3" type="submit" value="submit">Save Changes</button><span style="color: blue;">or</span> <button class="btn bg-transparent">Change Password</button> </div>
+                        <div class="d-sm-flex align-items-center pt-3" id="deactivate">
+                            <div> <b>Delete account</b>
+                                <p>After click your account will be deleted</p>
+                            </div>
+                            <div class="ml-auto"> <button class="btn danger">Delete</button> </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </section>
+        </div>
+    </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="exampleModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Login here,</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp" placeholder="Enter email">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                            else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1"
+                            placeholder="Password">
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Accept all terms & conditions.</label>
+                    </div>
+
+                </form>
+
+
+            </div>
+            <div class="modal-footer">
+                <a href="signin_form.html"><button type="button" class="btn btn-outline-dark">New user</button></a>
+                <button type="button" class="btn btn-dark">Submit</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+
+{% block script %}{% endblock script %}

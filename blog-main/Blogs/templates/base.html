@@ -1,0 +1,242 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lavishly+Yours&family=Rubik+Wet+Paint&display=swap"
+        rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>LetsBlog | {% block title %}{% endblock title %}</title>
+
+    <style>
+        
+        .date {
+            font-size: 11px
+        }
+
+        .comment-text {
+            font-size: 12px
+        }
+
+        .fs-12 {
+            font-size: 12px
+        }
+
+        .shadow-none {
+            box-shadow: none
+        }
+
+
+
+        .cursor:hover {
+            color: blue
+        }
+
+        .cursor {
+            cursor: pointer
+        }
+
+        .textarea {
+            resize: none
+        }
+
+        .fa-facebook {
+            color: #3b5999
+        }
+
+        .fa-twitter {
+            color: #55acee
+        }
+
+        .fa-linkedin {
+            color: #0077B5
+        }
+
+        .fa-instagram {
+            color: #e4405f
+        }
+
+        .fa-dribbble {
+            color: #ea4c89
+        }
+
+        .fa-pinterest {
+            color: #bd081c
+        }
+
+        .fa {
+            cursor: pointer
+        }
+        
+    </style>
+</head>
+
+<body>
+    <nav class="navbar m-4 p-3 navbar-expand-lg " style="border-radius: 30px;background-color: #121212;">
+        <a class="navbar-brand mr-auto text-white" href="{% url 'Posts:post-view' %}"
+            style="font-family: 'Rubik Wet Paint', cursive; font-size: 1.5rem;">LetsBlog</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+
+            <div class="form-inline my-2 my-lg-0">
+                {% if request.user.is_authenticated %}
+                <button type="button" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-log-out"></span><a href="{% url 'Blogs:logout-view' %}"> Log out</a>
+                  </button>
+                <a href="{% url 'Profiles:profile-view' %}"><i class="fa fa-user fa-2x p-1 text-white"></i></a>
+                
+            {% else %}
+            <button class="btn my-2 text-white"  type="submit" data-toggle="modal" data-target="#exampleModal"
+            style="background-color: transparent;">Sign
+            in </button>
+            {% endif %}
+                <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+                
+                
+            </div>
+        </div>
+    </nav>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        
+        <li  class="{% if message.tags %}alert alert-{{message.tags}}{% endif %}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Login here,</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <form method="post" id="lgform">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Username</label>
+                            <input type="text" name="username" class="form-control" id="uname"
+                                aria-describedby="emailHelp" placeholder="Enter Username" required>
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                                else.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" name="pass" id="pass"
+                                placeholder="Password" required>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+                            <label class="form-check-label" for="exampleCheck1">Accept all terms & conditions.</label>
+                        </div>
+
+                    
+
+
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'Blogs:register' %}"><button type="button" class="btn btn-outline-dark">New user</button></a>
+                    <button type="button" id="btnlogin" class="btn btn-dark">Submit</button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% block body %}
+
+{% endblock body %}
+   
+
+
+
+
+
+
+
+    <!-- <section class="m-5" style="display:grid;place-items:center">
+        <div class="btn btn-dark col-2" data-toggle="modal" data-target="#exampleModal">
+            Lets Get Started
+        </div>
+    </section> -->
+    <!-- This is model for login form  -->
+
+    <!-- This is model for login form  -->
+    <!-- Footer -->
+    <!-- Footer -->
+    <footer class="page-footer font-small  pt-4 m-4" style="border-radius: 30px;background-color: #121212;">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center text-white py-3">© 2022 Copyright:
+            <a href="" class="text-white"> LetsBlog.com</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+    <!-- Footer -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>    
+</body>
+
+<script>
+    $( document ).ready(function() {
+    console.log( "ready!" );
+    $("#btnlogin").click(function(){
+        console.log("btn clicked");
+        usnm = $("#uname").val();
+        pass = $("#pass").val();
+        csrf = $('input[name=csrfmiddlewaretoken]').val();
+        
+        mydata = {u_name:usnm,pass:pass,csrfmiddlewaretoken: csrf}
+        $.ajax({
+            url : "{% url 'Blogs:login' %}",
+            method : "POST",
+            data : mydata,
+            success:function(response){
+                    data = response.status
+                    if(data=="You are Logged In successfully...!"){
+                        $("#lgform")[0].reset();
+                        window.location.reload();        
+                    }
+                    alert(data)
+                    console.log(data);
+                    // setInterval(function() {
+                    // $("nav").load(location.href+" nav>*","");
+                    // }, 2000); 
+                    
+                
+                    
+            }
+        })
+    });
+
+});
+
+    
+</script>
+</html>

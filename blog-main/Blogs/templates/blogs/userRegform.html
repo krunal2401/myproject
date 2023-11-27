@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}
+User-Reg
+{% endblock title %}
+
+
+{% block body %}
+<div id="msg">
+
+</div>
+
+<section class="m-4" >
+    <div class="jumbotron" style="border-radius: 30px;">
+        <h1 class="display-4">Sign-in here</h1>
+        <p class="lead">Please sign-in before starting your blogging career</p>
+        <hr class="my-4">
+        <form method="post" action="{% url 'Blogs:validate' %}" id="regform">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-6">
+                        <label for="exampleFormControlInput1">Username</label>
+                        <input type="text" name="username" value="{% if username %}{{username}}{% endif %}" class="form-control mb-3" id="username"
+                            placeholder="Enter your username" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="exampleFormControlInput2">Email address</label>
+                        <input type="email" name="email" value="{% if email %}{{email}}{% endif %}" class="form-control mb-3" id="email"
+                            placeholder="Enter your email" required>
+
+                    </div>
+
+
+                </div>
+                    
+
+
+                </div>
+
+
+
+                <label for="exampleFormControlInput4">Create password</label>
+                <input type="password" name="pass1" value="{% if pass1 %}{{pass1}}{% endif %}" class="form-control mb-3" id="pass1"
+                    placeholder="Enter your password" required>
+                <label for="exampleFormControlInput5">Re-enter password</label>
+                <input type="password" name="pass2" value="{% if pass2 %}{{pass2}}{% endif %}" class="form-control mb-3" id="pass2"
+                    placeholder="Enter your password again" required>
+                
+                <button type="submit" class="btn btn-dark col-4 m-auto btn-block " id="mybtnsubmit"
+                    style="border-radius: 30px;">Sign-in <i class="fa p-2 fa-arrow-circle-right"></i>
+                </button>
+
+
+            </div>
+            <a href="/register"><button type="button"  class="btn btn-dark col-4 m-auto btn-block "
+                    style="border-radius: 30px;">  reset form <i class="fa p-2 fa-arrow-circle-right"></i>
+                </button>
+            </a>
+
+
+        </form>
+        </p>
+    </div>
+</section>
+
+{% endblock body %}
+

@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Posts
+{% endblock title %}
+
+
+{% block body %}
+
+{% if request.user.is_authenticated %}
+<section style="justify-content: center;margin-inline:100px;">
+    <div class="jumbotron" style="border-radius: 20px;">
+
+        <p class="lead">Create Blog</p>
+        <hr class="my-2">
+        <form method="post" action="{% url 'Posts:save' %}" id="pform" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-3">
+                        <label for="exampleFormControlInput1">Blog title</label>
+                        <input type="text" name="title" class="form-control" id="title"
+                            placeholder="Enter your blog title" required>
+                    </div>
+                </div>
+
+                <label class="form-label m-1" for="customFile">Upload image related to your blog</label>
+                <input type="file" class="form-control" name="image" id="image" accept="image/*">
+                <label class="mt-1" for="basicdescription ">Basic description</label>
+                <textarea class="form-control" name="body" rows="3" id="body" required></textarea>
+
+                <button type="submit" class="btn btn-dark col-3 ml-auto btn-block m-2" id="btnsubmit"
+                    style="border-radius: 30px;">Upload Blog<i class="fa p-2 fa-upload"></i>
+                </button>
+
+
+            </div>
+
+        </form>
+        </p>
+    </div>
+</section>
+{% endif %}
+
+
+
+<span class="current">
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+</span>
+<div id="mycard">
+    {% for i in page_obj %}
+    <div>
+        <div class="card container my-4" style="justify-content: center;margin:auto;" id="cardbody">
+            <div class="d-flex flex-row user-info my-3"><img class="rounded-circle" src="{{i.author.avatar.url}}"
+                    width="40">
+                <div class="d-flex flex-column justify-content-start ml-2"><span
+                        class="d-block font-weight-bold name">{{i.author}}</span><span class="date text-black-50">Shared
+                        publicly - Jan 2020</span></div>
+            </div>
+            <hr>
+            <div class="header p-3 bg text-center font-weight-bold"
+                style="font-size: 1.5rem; background-color: aliceblue;">
+                {{i.title}}</div>
+            <div style="margin:auto; justify-content: center;">
+                {% if i.img %}
+                <img src="{{i.img.url}}" width="100%">
+                {% endif %}
+            </div>
+            <hr>
+            <div class="card-body">
+
+                <small class="text-muted cat d-flex justify-content-between">
+                    <div class="views">{{i.created}}
+                    </div>
+                    <div class="stats">
+                        <i class="fa fa-eye"></i> 1347
+                        <i class="fa fa-comment"></i> 12
+                    </div>
+                </small>
+                <p class="card-text mt-2">{{i.body}}</p>
+
+            </div>
+            <hr>
+            <div class="container">
+                <div class="d-flex justify-content-center row">
+                    <div class="col-md-12">
+                        <div class="d-flex flex-column comment-section" id="myGroup">
+                            <div class="bg-white p-2">
+                                <div class="d-flex flex-row user-info"><img class="rounded-circle"
+                                        src="{{i.author.avatar.url}}" width="40">
+                                    <div class="d-flex flex-column justify-content-start ml-2"><span
+                                            class="d-block font-weight-bold name">{{i.author}}</span><span
+                                            class="date text-black-50">Shared publicly - Jan 2020</span></div>
+                                </div>
+                                <div class="mt-2">
+                                    <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                        do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                                        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                        consequat.</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-2">
+                                <div class="d-flex flex-row fs-12">
+                                    
+                                    
+                                    <div class="like p-2 cursor"><a href="{% url 'Posts:like' i.id %}"><i
+                                        class="fa fa-thumbs-o-up"></i><span class="ml-1">Like</span></a></div>
+                                <p>{{i.get_num_of_likes}}</p>
+
+                                    
+                                    
+                                    
+                                    
+
+
+                                    <div class="like p-2 cursor action-collapse" data-toggle="collapse"
+                                        aria-expanded="true" aria-controls="collapse-1" href="#collapse-1"><i
+                                            class="fa fa-commenting-o"></i><span class="ml-1">Comment</span></div>
+                                    <div class="like p-2 cursor action-collapse" data-toggle="collapse"
+                                        aria-expanded="true" aria-controls="collapse-2" href="#collapse-2"><i
+                                            class="fa fa-share"></i><span class="ml-1">Share</span></div>
+                                </div>
+                            </div>
+
+                            <div id="collapse-1" class="p-2 collapse" data-parent="#myGroup">
+                                <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
+                                        src="image/1.jpg" width="40">
+                                </div>
+                                <div class="mt-5 mb-4 text-right"><button class="btn btn-dark btn-sm shadow-none"
+                                        type="button">Post comment</button></div>
+                            </div>
+
+                            <div id="collapse-2" class=" p-2 collapse" data-parent="#myGroup">
+                                <div class="d-flex flex-row align-items-start"><i
+                                        class="fa fa-facebook border p-3 rounded mr-1"></i><i
+                                        class="fa fa-twitter border p-3 rounded mr-1"></i><i
+                                        class="fa fa-linkedin border p-3 rounded mr-1"></i><i
+                                        class="fa fa-instagram border p-3 rounded mr-1"></i><i
+                                        class="fa fa-dribbble border p-3 rounded mr-1"></i> <i
+                                        class="fa fa-pinterest-p border p-3 rounded mr-1"></i> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    {% endfor %}
+</div>
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">first</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            </li>
+            {% endif %}
+
+            {% for i in range %}
+            <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+            {% endfor %}
+
+
+
+            {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{page_obj.paginator.num_pages}}">Last</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+
+
+{% endblock body %}

@@ -1,0 +1,24 @@
+$("#pform")[0].reset();
+        mydata = {title:ttl,image:img,body:bdy, csrfmiddlewaretoken: csrf}
+
+ $.ajax({
+            url : '{% url 'Posts:save' %}',
+            method : "POST",
+            mimeType: 'multipart/form-data',
+            processData:false,
+            contentType:false,
+            data : fdata,
+            success:function(response){
+                    data = response.all_post
+                    $('#blogsection div').empty();
+                    console.log(response.status);
+                    console.log(response.all_post);
+                    
+            }
+        })
+
+           fdata = new FormData();
+        fdata.append("image", $("input[id^='image']")[0].files[0]);
+        fdata.append("title", ttl);
+        fdata.append("body", bdy);
+        fdata.append("csrfmiddlewaretoken", csrf);
